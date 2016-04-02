@@ -70,8 +70,6 @@ int * find_sequences(int *arr, int len){
 				break;
 			}
 		}
-
-
 		return indexes;
 	}
 	else{

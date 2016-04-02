@@ -27,12 +27,87 @@ Difficulty : Medium
 */
 #include <stdlib.h>
 #include <stdio.h>
-
+int circularcount(struct node *q);
+int count(struct node *q);
+int merge_circularlists(struct node **head1, struct node **head2);
 struct node{
 	int data;
 	struct node *next;
 };
 int merge_circularlists(struct node **head1, struct node **head2){
 	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
-	return -1;
+	if (*head1 != NULL&&*head2 != NULL){
+		int l1 = count(*head1);
+		int l2 = count(*head2);
+		struct node *merge;
+			struct node *tempA, *tempB, *rA, *rB;
+			tempA = *head1;
+			tempB = *head2;
+			while (tempA != NULL&&tempB != NULL){
+				if (tempA->data <= tempB->data){
+					if (tempA->next != NULL){
+						if (tempB->data < tempA->next->data){
+							rA = tempA->next;
+							tempA->next = tempB;
+							tempA = rA;
+						}
+						else{
+							tempA = tempA->next;
+						}
+					}
+					else{
+						tempA->next = tempB;
+						while (tempB->next != *head2){
+							tempB = tempB->next;
+						}
+						tempB->next = *head1;
+						merge = *head1;
+					}
+				}
+				else{
+					if (tempB->next != NULL){
+						if (tempA->data <= tempB->next->data){
+							rB = tempB->next;
+							tempB->next = tempA;
+							tempB = rB;
+						}
+						else{
+							tempB = tempB->next;
+						}
+					}
+					else{
+						tempB->next = tempA;
+						while (tempA->next != *head1){
+							tempA = tempA->next;
+						}
+						tempA->next = *head2;
+						merge = *head2;
+					}
+				}
+			}
+			return l1+l2;
+	}
+	else{
+		return -1;
+	}
+}
+int count(struct node *q){
+	struct node *temp;
+	temp = q;
+	int c = 0;
+	while (temp->next != NULL){
+		c = c + 1;
+		temp = temp->next;
+	}
+	return c;
+}
+int circularcount(struct node *q){
+	struct node *temp;
+	temp = q;
+	int c = 0;
+	while (temp->next != q){
+		c = c + 1;
+		temp = temp->next;
+	}
+	return c;
 }

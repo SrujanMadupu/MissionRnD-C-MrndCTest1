@@ -59,6 +59,17 @@ int * find_sequences(int *arr, int len){
 				break;
 			}
 		}
+		for (int i = j; i < len;){
+			if (arr[i + 1] /arr[i] == arr[i + 2] / arr[i + 1]){
+				i = i + 1;
+			}
+			else{
+				arr[j] = 0;
+				arr[j + 1] = i + 2;
+				j = j + 2;
+				break;
+			}
+		}
 
 
 		return indexes;
